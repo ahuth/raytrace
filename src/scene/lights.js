@@ -1,5 +1,5 @@
-import Vector from '../utils/vector.js';
+import * as Vector from '../utils/vector.js';
 
 export default [
-  new Vector(-30, -10, 20),
+  Vector.create(-30, -10, 20),
 ];
