@@ -38,16 +38,22 @@ export function unitVector(a) {
   return scale(a, 1 / length(a));
 }
 
-// Return a new vector by adding together two or more vectors. The looping here
-// may be slow, and if so this should be changed to take only two vectors.
-export function add(...vectors) {
-  return vectors.reduce((acc, a) => {
-    return create(
-      acc.x + a.x,
-      acc.y + a.y,
-      acc.z + a.z,
-    );
-  }, create(0, 0, 0));
+// Return a new vector by adding together two vectors.
+export function add(a, b) {
+  return create(
+    a.x + b.x,
+    a.y + b.y,
+    a.z + b.z,
+  );
+}
+
+// Return a new vector by adding together three vectors.
+export function add3(a, b, c) {
+  return create(
+    a.x + b.x + c.x,
+    a.y + b.y + c.y,
+    a.z + b.z + c.z,
+  );
 }
 
 // Return a new vector by subtracting one from another.
