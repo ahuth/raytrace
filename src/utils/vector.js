@@ -1,3 +1,5 @@
+export const UP = create(0, 1, 0);
+
 export function create(x, y, z) {
   return { x, y, z };
 }
