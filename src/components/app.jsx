@@ -2,18 +2,18 @@ import React from 'react';
 
 export default class App extends React.Component {
   canvasRef = React.createRef();
-  state = { playing: false };
+  playing = false;
 
   componentDidMount() {
     this.ctx = this.canvasRef.current.getContext('2d');
   }
 
   handlePlay = () => {
-    this.setState({ playing: true });
+    this.playing = true;
   }
 
   handleStop = () => {
-    this.setState({ playing: false });
+    this.playing = false;
   }
 
   render() {
