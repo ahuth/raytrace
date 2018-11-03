@@ -40,13 +40,13 @@ export default function render(scene, height, width, pixelData) {
       const index = (x * 4) + (y * width * 4);
 
       // Directly modify the pixel data of our canvas.
-      data.data[index + 0] = color.x;
-      data.data[index + 1] = color.y;
-      data.data[index + 2] = color.z;
-      data.data[index + 3] = 255;
+      pixelData.data[index + 0] = color.x;
+      pixelData.data[index + 1] = color.y;
+      pixelData.data[index + 2] = color.z;
+      pixelData.data[index + 3] = 255;
     }
   }
 
   // Return the generated pixel values.
-  return data;
+  return pixelData;
 }
