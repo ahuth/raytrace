@@ -4,7 +4,7 @@ import * as Vector from './vector.js';
 // For each pixel of our canvas, bounce a ay from the eye through the scene, determining if any
 // objects or lights are encountered.
 export default function render(scene, height, width, pixelData) {
-  const { camera, objects, lights } = scene;
+  const { camera } = scene;
 
   // Vector pointing in the direction the camera is pointing.
   const eyeVector = Vector.unitVector(Vector.subtract(camera.vector, camera.point));
