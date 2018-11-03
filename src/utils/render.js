@@ -36,7 +36,7 @@ export default function render(scene, height, width, pixelData) {
         Vector.unitVector(Vector.add3(eyeVector, xComp, yComp)),
       );
 
-      const color = Ray.trace(ray, scene);
+      const color = Ray.trace(ray, scene, 0);
       const index = (x * 4) + (y * width * 4);
 
       // Directly modify the pixel data of our canvas.
