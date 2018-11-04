@@ -1,6 +1,6 @@
 import React from 'react';
-import * as scene from '../scene';
-import render from '../utils/render';
+import * as scene from '../scene.js';
+import render from '../utils/render.js';
 
 export default class App extends React.Component {
   canvasRef = React.createRef();

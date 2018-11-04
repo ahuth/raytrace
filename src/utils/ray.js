@@ -1,5 +1,5 @@
-import * as Vector from './vector';
 import * as Sphere from './sphere.js';
+import * as Vector from './vector.js';
 
 export function create(origin, vector) {
   return {
