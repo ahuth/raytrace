@@ -83,6 +83,77 @@ function sphereIntersection(sphere, ray) {
   return vectorLength - Math.sqrt(discriminant);
 }
 
+// Given that we a ray has hit an object, determine what color the ray acquires from the
+// interaction.
 function surface(ray, scene, object, intersectionPoint, normal, depth) {
-  return Vector.create(0, 0, 0);
+  const objectColor = object.color;
+  let rayColor = Vector.WHITE;
+  let lambertAmount = 0;
+
+  // Lambert shading.
+  // See http://en.wikipedia.org/wiki/Lambertian_reflectance
+  if (object.lambert) {
+    for (let i = 0; i < scene.lights.length; i++) {
+      const lightPoint = scene.lights[i];
+
+      // Can we even see the light?
+      if (!isLightVisible(intersectionPoint, scene, lightPoint)) { continue; }
+
+      // Calculate lambertian reflectance.
+      const contribution = Vector.dot(
+        Vector.unitVector(Vector.subtract(lightPoint, intersectionPoint)),
+        normal,
+      );
+
+      if (contribution > 0) {
+        lambertAmount += contribution;
+      }
+    }
+  }
+
+  // Specular reflection.
+  // See https://en.wikipedia.org/wiki/Specular_reflection
+  if (object.specular) {
+    // Basically the same process as 'render', except from the standpoint of a point on an object.
+    const reflectedRay = create(
+      intersectionPoint,
+      Vector.reflectThrough(ray.vector, normal),
+    );
+
+    const reflectedColor = trace(reflectedRay, scene, depth + 1);
+
+    if (reflectedColor) {
+      rayColor = Vector.add(rayColor, Vector.scale(reflectedColor, object.specular));
+    }
+  }
+
+  // Ensure lambert never "blows out" the lighting of an object, even if it bounces between lots of
+  // objects and lights.
+  lambertAmount = Math.min(1, lambertAmount);
+
+  // Ambient light shines bright regardless of whether a light is visible or not.
+  return Vector.add3(
+    rayColor,
+    Vector.scale(objectColor, lambertAmount * object.lambert),
+    Vector.scale(objectColor, object.ambient),
+  );
+}
+
+// Check whether a light is visible from some point on the surface of something.
+// Note that there might be an intersection here, which is tricky - but if it's
+// tiny, it's actually an intersection with the object we're trying to decide
+// the surface of. That's why we check for `> -0.005` at the end.
+//
+// This is the part that makes objects cast shadows on each other: from here
+// we'd check to see if the area in a shadowy spot can 'see' a light, and when
+// this returns `false`, we make the area shadowy.
+function isLightVisible(point, scene, light) {
+  const { distance } = intersectScene(
+    create(
+      point,
+      Vector.unitVector(Vector.subtract(point, light))),
+    scene,
+  );
+
+  return distance > -0.005;
 }
