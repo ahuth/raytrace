@@ -87,7 +87,7 @@ function sphereIntersection(sphere, ray) {
 // interaction.
 function surface(ray, scene, object, intersectionPoint, normal, depth) {
   const objectColor = object.color;
-  let rayColor = Vector.WHITE;
+  let rayColor = Vector.ZERO;
   let lambertAmount = 0;
 
   // Lambert shading.

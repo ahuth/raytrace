@@ -1,5 +1,6 @@
 export const UP = create(0, 1, 0);
 export const WHITE = create(255, 255, 255);
+export const ZERO = create(0, 0, 0);
 
 export function create(x, y, z) {
   return { x, y, z };
