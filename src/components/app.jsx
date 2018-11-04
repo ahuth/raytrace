@@ -1,5 +1,5 @@
 import React from 'react';
-import * as scene from '../scene.js';
+import * as scene from '../scene';
 import render from '../utils/render.js';
 
 export default class App extends React.Component {
